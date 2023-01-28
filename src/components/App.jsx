@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getError, getIsLoading } from 'redux/contacts/contactsSelectors';
+import { selectError, selectIsLoading } from 'redux/contacts/contactsSelectors';
 import { ContactsPage } from 'features/contacts/Contacts';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Section } from './Section/Section';
@@ -11,8 +11,8 @@ import { contactsOperations } from 'redux/contacts';
 
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());

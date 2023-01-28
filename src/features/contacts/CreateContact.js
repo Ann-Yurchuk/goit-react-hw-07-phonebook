@@ -10,7 +10,7 @@ export const CreateContact = () => {
   const dispatch = useDispatch();
   const [newUserName, setNewUserName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(contactsSelectors.getContacts);
+  const contacts = useSelector(contactsSelectors.selectContacts);
 
   const onAddNewContact = () => {
     if (!newUserName || !number) {
