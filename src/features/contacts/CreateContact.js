@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputPhone, Button } from './Contacts.styled';
-import { addContact } from '../../redux/contacts.slice';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,7 +10,7 @@ export const CreateContact = () => {
   const dispatch = useDispatch();
   const [newUserName, setNewUserName] = useState('');
   const [number, setNumber] = useState('');
-  const { contacts } = useSelector(state => state.contacts);
+  const contacts = useSelector(contactsSelectors.getContacts);
 
   const onAddNewContact = () => {
     if (!newUserName || !number) {
@@ -27,7 +27,7 @@ export const CreateContact = () => {
       name: newUserName,
       number: number,
     };
-    dispatch(addContact(newContact));
+    dispatch(contactsOperations.addContact(newContact));
     setNewUserName('');
     setNumber('');
   };

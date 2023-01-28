@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../redux/contacts.slice';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
+import { useEffect } from 'react';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const { contacts } = useSelector(state => state.contacts);
-  const  filter  = useSelector(state => state.filter);
+  const contacts = useSelector(contactsSelectors.getContacts);
+  const { filter } = useSelector(contactsSelectors.getFilter);
+
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
 
   const onDeleteContact = id => {
-    dispatch(deleteContact(id));
+    dispatch(contactsOperations.deleteContact(id));
   };
 
   const filterContacts = contacts.filter(contact => {
@@ -17,6 +22,7 @@ export const ContactList = () => {
   if (filterContacts.length === 0 && !filter) {
     return <p> There are no contacts.</p>;
   }
+
   return (
     <ul>
       {filterContacts.map(contact => (
