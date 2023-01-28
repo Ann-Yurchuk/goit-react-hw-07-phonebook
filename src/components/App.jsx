@@ -1,20 +1,22 @@
 import { useSelector } from 'react-redux';
-import {
-  getError,
-  getIsLoading,
-  getContacts,
-} from 'redux/contacts/contactsSelectors';
+import { useEffect } from 'react';
+import { getError, getIsLoading } from 'redux/contacts/contactsSelectors';
 import { ContactsPage } from 'features/contacts/Contacts';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Section } from './Section/Section';
 import { Layout } from './Layout/Layout';
 import { ToastContainer } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { contactsOperations } from 'redux/contacts';
 
 function App() {
-  const items = useSelector(getContacts);
-  const { isLoading } = useSelector(getIsLoading);
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
-  console.log(items);
+
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
 
   return (
     <Layout>
@@ -24,7 +26,7 @@ function App() {
       {isLoading && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
       <Section title="Contacts">
-       {items && <ContactsPage />} 
+        <ContactsPage />
       </Section>
       <ToastContainer autoClose={3000} />
     </Layout>

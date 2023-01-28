@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsOperations, contactsSelectors } from 'redux/contacts';
+import { getContacts, getFilter } from 'redux/contacts/contactsSelectors';
 import { useEffect } from 'react';
+import { contactsOperations } from 'redux/contacts';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(contactsSelectors.getContacts);
-  const { filter } = useSelector(contactsSelectors.getFilter);
+  const items = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());
@@ -15,14 +16,13 @@ export const ContactList = () => {
     dispatch(contactsOperations.deleteContact(id));
   };
 
-  const filterContacts = contacts.filter(contact => {
-    return contact.name.toLowerCase().includes(filter);
+  const filterContacts = items.filter(item => {
+    return item.name.toLowerCase().includes(filter);
   });
 
   if (filterContacts.length === 0 && !filter) {
     return <p> There are no contacts.</p>;
   }
-
   return (
     <ul>
       {filterContacts.map(contact => (

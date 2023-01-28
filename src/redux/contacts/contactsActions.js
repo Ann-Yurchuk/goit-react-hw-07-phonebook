@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-
 // pending
 export const fetchContactsRequest = createAction('contacts/fetchContactsRequest');
 // fullfilled
