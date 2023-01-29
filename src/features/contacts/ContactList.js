@@ -17,7 +17,7 @@ export const ContactList = () => {
   };
 
   const filterContacts = items.filter(item => {
-    return item.name.toLowerCase().includes(filter);
+    return item.name.toLowerCase().includes(filter.toLowerCase());
   });
 
   if (filterContacts.length === 0 && !filter) {
